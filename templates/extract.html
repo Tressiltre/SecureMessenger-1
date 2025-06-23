@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Extract Message from Image - CryptoSecure App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card bg-dark border-secondary">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i data-feather="eye" class="me-2"></i>Image Steganography - Extract Message
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Select Image with Hidden Message</label>
+                        <input type="file" class="form-control" id="image" name="image" 
+                               accept=".png,.jpg,.jpeg,.gif,.bmp" required>
+                        <div class="form-text">
+                            <i data-feather="image" class="me-1"></i>
+                            Upload the image that contains the hidden message
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="secret_key" class="form-label">Secret Key</label>
+                        <input type="password" class="form-control" id="secret_key" name="secret_key" 
+                               placeholder="Enter the secret key used to hide the message" required>
+                        <div class="form-text">
+                            <i data-feather="key" class="me-1"></i>
+                            This must match the key used when hiding the message
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i data-feather="info" class="me-2"></i>
+                        The extraction process will attempt to recover the hidden message from the image's 
+                        least significant bits using your secret key.
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i data-feather="eye" class="me-2"></i>Extract Hidden Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        {% if extracted_message %}
+        <div class="card bg-dark border-secondary mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="check-circle" class="me-2 text-success"></i>Message Extracted Successfully
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Extracted Hidden Message</label>
+                    <div class="form-control bg-secondary" style="min-height: 150px; white-space: pre-wrap;">{{ extracted_message }}</div>
+                    <button class="btn btn-sm btn-outline-secondary mt-2" onclick="copyToClipboard('{{ extracted_message }}')">
+                        <i data-feather="copy" class="me-1"></i>Copy Message
+                    </button>
+                </div>
+                
+                <div class="alert alert-success">
+                    <i data-feather="check-circle" class="me-2"></i>
+                    The hidden message has been successfully extracted from the image!
+                </div>
+                
+                <div class="d-grid">
+                    <a href="{{ url_for('extract') }}" class="btn btn-outline-secondary">
+                        <i data-feather="search" class="me-2"></i>Extract Another Message
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,161 @@
+/* Custom styles for CryptoSecure App */
+
+:root {
+    --crypto-primary: #0d6efd;
+    --crypto-secondary: #6c757d;
+    --crypto-success: #198754;
+    --crypto-danger: #dc3545;
+    --crypto-warning: #ffc107;
+    --crypto-info: #0dcaf0;
+    --crypto-dark: #212529;
+}
+
+body {
+    background-color: var(--bs-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card enhancements */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+}
+
+/* Form enhancements */
+.form-control:focus {
+    border-color: var(--crypto-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Button enhancements */
+.btn {
+    transition: all 0.15s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Navbar enhancements */
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Alert enhancements */
+.alert {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+/* Code/encrypted text styling */
+.form-control[readonly] {
+    background-color: var(--bs-secondary) !important;
+    border: 1px solid var(--bs-border-color);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+/* Copy button styling */
+.btn-outline-secondary:hover {
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+}
+
+/* Dashboard cards */
+.dashboard-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.02);
+}
+
+/* Steganography specific styles */
+.file-upload-area {
+    border: 2px dashed var(--bs-border-color);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+.file-upload-area:hover {
+    border-color: var(--crypto-primary);
+}
+
+/* Progress indicators */
+.progress {
+    height: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+/* Security-themed icons */
+.security-icon {
+    color: var(--crypto-primary);
+    filter: drop-shadow(0 0 4px rgba(13, 110, 253, 0.3));
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bs-secondary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-light);
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+}
+
+/* Success states */
+.success-glow {
+    box-shadow: 0 0 20px rgba(25, 135, 84, 0.4);
+}
+
+/* Error states */
+.error-glow {
+    box-shadow: 0 0 20px rgba(220, 53, 69, 0.4);
+}

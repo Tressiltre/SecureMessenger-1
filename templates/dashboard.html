@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CryptoSecure App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i data-feather="dashboard" class="me-2"></i>Dashboard
+            </h2>
+            <span class="text-muted">Welcome back, {{ current_user.username }}!</span>
+        </div>
+    </div>
+</div>
+
+<!-- Action Cards -->
+<div class="row mb-5">
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card bg-primary text-white h-100">
+            <div class="card-body text-center">
+                <i data-feather="key" class="mb-3" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">Encrypt Message</h5>
+                <p class="card-text">Secure your messages with RSA encryption</p>
+                <a href="{{ url_for('encrypt') }}" class="btn btn-light">
+                    <i data-feather="arrow-right" class="me-1"></i>Encrypt
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card bg-info text-white h-100">
+            <div class="card-body text-center">
+                <i data-feather="unlock" class="mb-3" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">Decrypt Message</h5>
+                <p class="card-text">Decrypt RSA encrypted messages</p>
+                <a href="{{ url_for('decrypt') }}" class="btn btn-light">
+                    <i data-feather="arrow-right" class="me-1"></i>Decrypt
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card bg-success text-white h-100">
+            <div class="card-body text-center">
+                <i data-feather="eye-off" class="mb-3" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">Hide Message</h5>
+                <p class="card-text">Conceal messages within images</p>
+                <a href="{{ url_for('steganography') }}" class="btn btn-light">
+                    <i data-feather="arrow-right" class="me-1"></i>Hide
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card bg-warning text-white h-100">
+            <div class="card-body text-center">
+                <i data-feather="eye" class="mb-3" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">Extract Message</h5>
+                <p class="card-text">Extract hidden messages from images</p>
+                <a href="{{ url_for('extract') }}" class="btn btn-light">
+                    <i data-feather="arrow-right" class="me-1"></i>Extract
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card bg-dark border-secondary">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="message-square" class="me-2"></i>Recent Encrypted Messages
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    <div class="list-group list-group-flush">
+                        {% for message in messages %}
+                        <div class="list-group-item bg-dark border-secondary">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Message #{{ message.id }}</h6>
+                                <small class="text-muted">{{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                            </div>
+                            <p class="mb-1 text-truncate">{{ message.original_message[:50] }}{% if message.original_message|length > 50 %}...{% endif %}</p>
+                            <small class="text-muted">MD5: {{ message.md5_hash[:16] }}...</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-3">
+                        <i data-feather="inbox" class="me-2"></i>No encrypted messages yet
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 mb-4">
+        <div class="card bg-dark border-secondary">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="image" class="me-2"></i>Recent Steganography Operations
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if stego_ops %}
+                    <div class="list-group list-group-flush">
+                        {% for op in stego_ops %}
+                        <div class="list-group-item bg-dark border-secondary">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Operation #{{ op.id }}</h6>
+                                <small class="text-muted">{{ op.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                            </div>
+                            <p class="mb-1">{{ op.original_filename }}</p>
+                            <small class="text-muted">
+                                <a href="{{ url_for('download_file', filename=op.modified_filename) }}" 
+                                   class="text-decoration-none">
+                                    <i data-feather="download" class="me-1"></i>Download Result
+                                </a>
+                            </small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-3">
+                        <i data-feather="image" class="me-2"></i>No steganography operations yet
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

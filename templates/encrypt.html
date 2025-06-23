@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Encrypt Message - CryptoSecure App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card bg-dark border-secondary">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i data-feather="key" class="me-2"></i>RSA Message Encryption
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message to Encrypt</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" 
+                                placeholder="Enter your message here (max ~190 characters for RSA)" required></textarea>
+                        <div class="form-text">
+                            <i data-feather="info" class="me-1"></i>
+                            RSA encryption has a size limit. For longer messages, consider using hybrid encryption.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i data-feather="lock" class="me-2"></i>Encrypt Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        {% if encrypted_message %}
+        <div class="card bg-dark border-secondary mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="check-circle" class="me-2 text-success"></i>Encryption Results
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Original Message</label>
+                    <div class="form-control bg-secondary" readonly>{{ original_message }}</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Encrypted Message (Base64)</label>
+                    <textarea class="form-control bg-secondary" rows="4" readonly>{{ encrypted_message }}</textarea>
+                    <button class="btn btn-sm btn-outline-secondary mt-2" onclick="copyToClipboard('{{ encrypted_message }}')">
+                        <i data-feather="copy" class="me-1"></i>Copy Encrypted Message
+                    </button>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">MD5 Hash (for integrity verification)</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-secondary" value="{{ md5_hash }}" readonly>
+                        <button class="btn btn-outline-secondary" onclick="copyToClipboard('{{ md5_hash }}')">
+                            <i data-feather="copy"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info">
+                    <i data-feather="info" class="me-2"></i>
+                    Save both the encrypted message and MD5 hash. You'll need the encrypted message for decryption and the hash for integrity verification.
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Decrypt Message - CryptoSecure App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card bg-dark border-secondary">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i data-feather="unlock" class="me-2"></i>RSA Message Decryption
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="encrypted_message" class="form-label">Encrypted Message (Base64)</label>
+                        <textarea class="form-control" id="encrypted_message" name="encrypted_message" rows="4" 
+                                placeholder="Paste your encrypted message here" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="expected_hash" class="form-label">Expected MD5 Hash (Optional)</label>
+                        <input type="text" class="form-control" id="expected_hash" name="expected_hash" 
+                               placeholder="Enter MD5 hash for integrity verification">
+                        <div class="form-text">
+                            <i data-feather="shield" class="me-1"></i>
+                            Providing the MD5 hash will verify message integrity after decryption.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i data-feather="unlock" class="me-2"></i>Decrypt Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        {% if decrypted_message %}
+        <div class="card bg-dark border-secondary mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="check-circle" class="me-2 text-success"></i>Decryption Results
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Decrypted Message</label>
+                    <div class="form-control bg-secondary" style="min-height: 100px; white-space: pre-wrap;">{{ decrypted_message }}</div>
+                    <button class="btn btn-sm btn-outline-secondary mt-2" onclick="copyToClipboard('{{ decrypted_message }}')">
+                        <i data-feather="copy" class="me-1"></i>Copy Decrypted Message
+                    </button>
+                </div>
+                
+                {% if hash_valid is not none %}
+                <div class="alert {% if hash_valid %}alert-success{% else %}alert-warning{% endif %}">
+                    <i data-feather="{% if hash_valid %}check-circle{% else %}alert-triangle{% endif %}" class="me-2"></i>
+                    <strong>Integrity Check:</strong>
+                    {% if hash_valid %}
+                        MD5 hash verification passed. Message integrity confirmed.
+                    {% else %}
+                        MD5 hash verification failed. Message may have been tampered with or hash is incorrect.
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

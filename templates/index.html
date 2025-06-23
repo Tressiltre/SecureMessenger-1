@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Home - CryptoSecure App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Hero Section -->
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i data-feather="shield" style="width: 64px; height: 64px;" class="text-primary"></i>
+            </div>
+            <h1 class="display-4 fw-bold mb-3">CryptoSecure</h1>
+            <p class="lead mb-4">
+                Advanced cryptographic platform featuring RSA encryption, MD5 hashing, 
+                and image steganography capabilities.
+            </p>
+            
+            {% if not current_user.is_authenticated %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4 me-md-2">
+                    <i data-feather="user-plus" class="me-2"></i>Get Started
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-4">
+                    <i data-feather="log-in" class="me-2"></i>Login
+                </a>
+            </div>
+            {% else %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg px-4">
+                    <i data-feather="dashboard" class="me-2"></i>Go to Dashboard
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="text-center mb-5">Security Features</h2>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 bg-dark border-secondary">
+            <div class="card-body text-center">
+                <i data-feather="key" class="mb-3 text-primary" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">RSA Encryption</h5>
+                <p class="card-text">
+                    Secure message encryption using 2048-bit RSA public-key cryptography.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 bg-dark border-secondary">
+            <div class="card-body text-center">
+                <i data-feather="hash" class="mb-3 text-info" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">MD5 Hashing</h5>
+                <p class="card-text">
+                    Message integrity verification using MD5 cryptographic hash functions.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 bg-dark border-secondary">
+            <div class="card-body text-center">
+                <i data-feather="eye-off" class="mb-3 text-success" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">Steganography</h5>
+                <p class="card-text">
+                    Hide secret messages within images using advanced steganographic techniques.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 bg-dark border-secondary">
+            <div class="card-body text-center">
+                <i data-feather="users" class="mb-3 text-warning" style="width: 48px; height: 48px;"></i>
+                <h5 class="card-title">User Management</h5>
+                <p class="card-text">
+                    Secure user authentication with individual RSA key pair generation.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works Section -->
+{% if not current_user.is_authenticated %}
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="text-center mb-5">How It Works</h2>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="d-flex">
+            <div class="flex-shrink-0">
+                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                     style="width: 48px; height: 48px;">
+                    <span class="text-white fw-bold">1</span>
+                </div>
+            </div>
+            <div class="flex-grow-1 ms-3">
+                <h5>Create Account</h5>
+                <p class="text-muted">
+                    Register for a secure account and get your personal RSA key pair generated automatically.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="d-flex">
+            <div class="flex-shrink-0">
+                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                     style="width: 48px; height: 48px;">
+                    <span class="text-white fw-bold">2</span>
+                </div>
+            </div>
+            <div class="flex-grow-1 ms-3">
+                <h5>Encrypt & Hash</h5>
+                <p class="text-muted">
+                    Encrypt your messages with RSA and generate MD5 hashes for integrity verification.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="d-flex">
+            <div class="flex-shrink-0">
+                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                     style="width: 48px; height: 48px;">
+                    <span class="text-white fw-bold">3</span>
+                </div>
+            </div>
+            <div class="flex-grow-1 ms-3">
+                <h5>Hide in Images</h5>
+                <p class="text-muted">
+                    Conceal your secrets within images using steganography for ultimate privacy.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

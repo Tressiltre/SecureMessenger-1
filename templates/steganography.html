@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Hide Message in Image - CryptoSecure App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card bg-dark border-secondary">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i data-feather="eye-off" class="me-2"></i>Image Steganography - Hide Message
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Select Image</label>
+                        <input type="file" class="form-control" id="image" name="image" 
+                               accept=".png,.jpg,.jpeg,.gif,.bmp" required>
+                        <div class="form-text">
+                            <i data-feather="image" class="me-1"></i>
+                            Supported formats: PNG, JPG, JPEG, GIF, BMP (Max size: 16MB)
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Secret Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" 
+                                placeholder="Enter the message you want to hide in the image" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="secret_key" class="form-label">Secret Key</label>
+                        <input type="password" class="form-control" id="secret_key" name="secret_key" 
+                               placeholder="Enter a secret key for additional security" required>
+                        <div class="form-text">
+                            <i data-feather="key" class="me-1"></i>
+                            This key will be required to extract the message later. Keep it safe!
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i data-feather="info" class="me-2"></i>
+                        The message will be hidden in the least significant bits of the image pixels. 
+                        The resulting image will look identical to the original but contain your secret message.
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i data-feather="eye-off" class="me-2"></i>Hide Message in Image
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Success Section -->
+        {% if success and output_filename %}
+        <div class="card bg-dark border-secondary mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="check-circle" class="me-2 text-success"></i>Message Hidden Successfully
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    <i data-feather="check-circle" class="me-2"></i>
+                    Your secret message has been successfully hidden in the image!
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('download_file', filename=output_filename) }}" 
+                       class="btn btn-success">
+                        <i data-feather="download" class="me-2"></i>Download Image with Hidden Message
+                    </a>
+                    <a href="{{ url_for('steganography') }}" class="btn btn-outline-secondary">
+                        <i data-feather="plus" class="me-2"></i>Hide Another Message
+                    </a>
+                </div>
+                
+                <div class="alert alert-warning mt-3">
+                    <i data-feather="alert-triangle" class="me-2"></i>
+                    <strong>Important:</strong> Remember your secret key! You'll need it to extract the message later.
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
