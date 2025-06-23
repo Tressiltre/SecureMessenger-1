@@ -118,6 +118,11 @@ SESSION_SECRET=your_secret_key_here
    pip install flask flask-sqlalchemy flask-login cryptography pillow psycopg2-binary gunicorn werkzeug email-validator pyjwt sqlalchemy oauthlib
    ```
 
+   **Alternative - One Command Installation:**
+   ```bash
+   pip install flask==3.0.0 flask-sqlalchemy==3.1.1 flask-login==0.6.3 cryptography==41.0.8 pillow==10.1.0 psycopg2-binary==2.9.9 gunicorn==21.2.0 werkzeug==3.0.1 email-validator==2.1.0 pyjwt==2.8.0 sqlalchemy==2.0.23 oauthlib==3.2.2
+   ```
+
 4. Set up PostgreSQL database and configure environment variables:
    ```bash
    export DATABASE_URL="postgresql://username:password@localhost/cryptosecure"
@@ -134,6 +139,33 @@ For production deployment using Gunicorn:
 ```bash
 gunicorn --bind 0.0.0.0:5000 --reuse-port --reload main:app
 ```
+
+#### Complete Setup Script
+For automated setup, copy and run this complete script:
+```bash
+#!/bin/bash
+# CryptoSecure App - Complete Setup Script
+
+echo "Setting up CryptoSecure Application..."
+
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# Install all dependencies with specific versions
+pip install flask==3.0.0 flask-sqlalchemy==3.1.1 flask-login==0.6.3 cryptography==41.0.8 pillow==10.1.0 psycopg2-binary==2.9.9 gunicorn==21.2.0 werkzeug==3.0.1 email-validator==2.1.0 pyjwt==2.8.0 sqlalchemy==2.0.23 oauthlib==3.2.2
+
+# Create uploads directory
+mkdir -p uploads
+
+# Set environment variables (modify these values)
+export DATABASE_URL="postgresql://user:password@localhost/cryptosecure"
+export SESSION_SECRET="your-super-secret-key-change-this"
+
+echo "Setup complete! Run 'python main.py' to start the application."
+```
+
+Save this as `setup.sh`, make it executable with `chmod +x setup.sh`, and run with `./setup.sh`
 
 #### Replit Deployment
 This application is configured to run on Replit:
@@ -197,9 +229,16 @@ mkdir uploads
    source venv/bin/activate
    ```
 
-2. **Install Dependencies**:
+2. **Install Dependencies** (Choose one option):
+   
+   **Option A - Simple Installation:**
    ```bash
    pip install flask flask-sqlalchemy flask-login cryptography pillow psycopg2-binary gunicorn werkzeug email-validator pyjwt sqlalchemy oauthlib
+   ```
+   
+   **Option B - Specific Versions (Recommended):**
+   ```bash
+   pip install flask==3.0.0 flask-sqlalchemy==3.1.1 flask-login==0.6.3 cryptography==41.0.8 pillow==10.1.0 psycopg2-binary==2.9.9 gunicorn==21.2.0 werkzeug==3.0.1 email-validator==2.1.0 pyjwt==2.8.0 sqlalchemy==2.0.23 oauthlib==3.2.2
    ```
 
 3. **Configure Database**:
