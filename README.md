@@ -99,11 +99,150 @@ SESSION_SECRET=your_secret_key_here
 ```
 
 ### Installation Steps
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Set up PostgreSQL database
-4. Configure environment variables
-5. Run the application: `python main.py`
+
+#### Local Development
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd cryptosecure-app
+   ```
+
+2. Create and activate virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install flask flask-sqlalchemy flask-login cryptography pillow psycopg2-binary gunicorn werkzeug email-validator pyjwt sqlalchemy oauthlib
+   ```
+
+4. Set up PostgreSQL database and configure environment variables:
+   ```bash
+   export DATABASE_URL="postgresql://username:password@localhost/cryptosecure"
+   export SESSION_SECRET="your-super-secret-key-here"
+   ```
+
+5. Run the application:
+   ```bash
+   python main.py
+   ```
+
+#### Production Deployment
+For production deployment using Gunicorn:
+```bash
+gunicorn --bind 0.0.0.0:5000 --reuse-port --reload main:app
+```
+
+#### Replit Deployment
+This application is configured to run on Replit:
+1. Fork or import the project to Replit
+2. PostgreSQL database is automatically configured
+3. Environment variables are handled by Replit
+4. Run using the configured workflow or `python main.py`
+
+### How to Run
+
+#### Development Mode
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Run Flask development server
+python main.py
+```
+The application will be available at `http://localhost:5000`
+
+#### Production Mode
+```bash
+# Using Gunicorn for production
+gunicorn --bind 0.0.0.0:5000 --workers 4 main:app
+```
+
+#### Docker (Optional)
+```dockerfile
+# Dockerfile example
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
+```
+
+### Database Setup
+The application automatically creates database tables on first run. For manual setup:
+```python
+from app import app, db
+with app.app_context():
+    db.create_all()
+```
+
+### File Structure Requirements
+Ensure the `uploads/` directory exists for file uploads:
+```bash
+mkdir uploads
+```
+
+### Quick Start Guide
+
+#### For First-Time Users:
+1. **Clone and Setup**:
+   ```bash
+   git clone <repository-url>
+   cd cryptosecure-app
+   python -m venv venv
+   source venv/bin/activate
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   pip install flask flask-sqlalchemy flask-login cryptography pillow psycopg2-binary gunicorn werkzeug email-validator pyjwt sqlalchemy oauthlib
+   ```
+
+3. **Configure Database**:
+   ```bash
+   export DATABASE_URL="postgresql://user:password@localhost/cryptosecure"
+   export SESSION_SECRET="your-secret-key"
+   ```
+
+4. **Run Application**:
+   ```bash
+   python main.py
+   ```
+
+5. **Access Application**:
+   Open browser to `http://localhost:5000`
+
+#### Default Access:
+- **Registration**: Create new account at `/register`
+- **Login**: Access existing account at `/login`
+- **Dashboard**: Main interface at `/dashboard` (after login)
+
+### Application Usage Flow
+
+1. **Register Account**: Create user account with automatic RSA key generation
+2. **Login**: Access your secure dashboard
+3. **Encrypt Messages**: Use RSA encryption with MD5 integrity verification
+4. **Hide Messages**: Use steganography to conceal secrets in images
+5. **Decrypt/Extract**: Retrieve encrypted messages or extract hidden content
+
+### Troubleshooting
+
+#### Common Issues:
+- **Database Connection**: Verify PostgreSQL is running and DATABASE_URL is correct
+- **File Upload Errors**: Ensure uploads directory exists with proper permissions
+- **Import Errors**: Install all dependencies in active virtual environment
+- **Port Conflicts**: Default port 5000, modify in main.py if needed
+- **Permission Issues**: Check file system permissions for uploads directory
+
+#### Debug Mode:
+Enable debug logging by setting Flask debug mode:
+```python
+app.run(host="0.0.0.0", port=5000, debug=True)
+```
 
 ## 💡 Usage Examples
 
